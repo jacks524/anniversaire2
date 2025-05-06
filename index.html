@@ -112,9 +112,9 @@
 <body>
   <!-- Vidéo de fond -->
     <!-- Vidéo de fond avec sources adaptatives -->
-  <video id="bg-video" muted loop playsinline preload="none">
+  <video id="bg-video" muted loop playsinline preload="auto">
     <!-- Version portrait pour mobiles (1:1 ou plus carré) -->
-    <source src="videos/ballon.mp4" type="video/mp4" media="(max-aspect-ratio: 1/1)">
+    <source src="videos/189916-887039157_small.mp4" type="video/mp4" media="(max-aspect-ratio: 1/1)">
   </video>
 
   <div id="header">🎈 Joyeux Anniversaire ! 🎈</div>
@@ -140,9 +140,9 @@
     <img class="image" src="images/11.jpg" alt="Image 10">
     <img class="image" src="images/12.jpg" alt="Image 11">
     <img class="image" src="images/13.jpg" alt="Image 12">
-    <img class="image" src="images/14jpg" alt="Image 13">
+    <img class="image" src="images/14.jpg" alt="Image 13">
     <img class="image" src="images/15.jpg" alt="Image 14">
-    <img class="image" src="images/16.jpg" alt="Image 15">
+    <img class="image" src="images/16jpg.jpg" alt="Image 15">
     <img class="image" src="images/17.jpg" alt="Image 16">
     <img class="image" src="images/18.jpg" alt="Image 17">
     <img class="image" src="images/19.jpg" alt="Image 18">
@@ -176,9 +176,10 @@
       // afficher et lancer la vidéo de fond
       const bgVideo = document.getElementById('bg-video');
       // recharge la vidéo pour s'assurer qu'elle ne démarre pas en avance
-      bgVideo.style.visibility = 'visible';
-      bgVideo.style.opacity = '1';
+      bgVideo.currentTime = 0;
+      bgVideo.load();
       bgVideo.play().catch(() => {});
+
 
       prompt.style.display = 'none';
       gift.style.display = 'none';
