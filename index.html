@@ -29,7 +29,7 @@
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background: black; /* Fond noir initial */
+      background: none; /* Fond noir initial */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -112,7 +112,7 @@
 <body>
   <!-- Vidéo de fond -->
     <!-- Vidéo de fond avec sources adaptatives -->
-  <video id="bg-video" muted loop playsinline preload="auto">
+  <video id="bg-video" muted loop playsinline autolay>
     <!-- Version portrait pour mobiles (1:1 ou plus carré) -->
     <source src="videos/189916-887039157_small.mp4" type="video/mp4" media="(max-aspect-ratio: 1/1)">
   </video>
