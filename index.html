@@ -171,31 +171,35 @@
       images[index].classList.add('active');
     }
     function startSlideshow() {
-      // changer le fond en transparent pour laisser voir la vidéo
-      document.body.style.background = 'none';
-      // afficher et lancer la vidéo de fond
       const bgVideo = document.getElementById('bg-video');
-      // recharge la vidéo pour s'assurer qu'elle ne démarre pas en avance
-      bgVideo.currentTime = 0;
-      bgVideo.load();
-      bgVideo.play().then(() => {
-          bgVideo.style.visibility = 'visible';
-          bgVideo.style.opacity = '1';
-        }).catch(() => {});
       
+      // rendre visible AVANT de jouer
+      bgVideo.style.visibility = 'visible';
+      bgVideo.style.opacity = '1';
+    
+      bgVideo.currentTime = 0;
+      bgVideo.play().catch(() => {});
+    
       prompt.style.display = 'none';
       gift.style.display = 'none';
       document.getElementById('header').style.display = 'none';
       slideshow.style.display = 'block';
       music.play().catch(() => {});
       showImage(0);
+    
       let count = 0;
       intervalId = setInterval(() => {
         count++;
-        if (count < images.length) showImage(count);
-        else { clearInterval(intervalId); slideshow.style.display = 'none'; message.style.display = 'block'; }
+        if (count < images.length) {
+          showImage(count);
+        } else {
+          clearInterval(intervalId);
+          slideshow.style.display = 'none';
+          message.style.display = 'block';
+        }
       }, duration);
     }
+
     gift.addEventListener('click', () => {
       gsap.to(gift, { scale: 1.2, duration: 0.5, ease: 'back.out(1.7)', onComplete: startSlideshow });
     }, { once: true });
