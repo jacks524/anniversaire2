@@ -178,9 +178,11 @@
       // recharge la vidéo pour s'assurer qu'elle ne démarre pas en avance
       bgVideo.currentTime = 0;
       bgVideo.load();
-      bgVideo.play().catch(() => {});
-
-
+      bgVideo.play().then(() => {
+          bgVideo.style.visibility = 'visible';
+          bgVideo.style.opacity = '1';
+        }).catch(() => {});
+      
       prompt.style.display = 'none';
       gift.style.display = 'none';
       document.getElementById('header').style.display = 'none';
