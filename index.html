@@ -64,7 +64,7 @@
 
     .gift-icon {
       position: absolute;
-      top: -25px;
+      bottom: -25px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 2em;
@@ -128,4 +128,125 @@
       transform: translate(-50%, -50%);
       font-size: 4em;
       font-weight: bold;
-      color
+      color: #ff3366;
+      text-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+      text-align: center;
+      line-height: 1.2;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fond vidéo -->
+  <video id="bg-video" muted loop playsinline autoplay>
+    <source src="videos/ballon.mp4" type="video/mp4">
+  </video>
+
+  <!-- Vidéo seule -->
+  <video id="solo-video" controls>
+    <source src="videos/surprise.mp4" type="video/mp4">
+    Votre navigateur ne peut pas lire cette vidéo.
+  </video>
+
+  <!-- Audio -->
+  <audio id="bg-music" loop>
+    <source src="audios/BIRTHDAY.mp3" type="audio/mpeg">
+    Votre navigateur ne supporte pas l'audio.
+  </audio>
+
+  <div id="header">🎈 Joyeux Anniversaire ! 🎈</div>
+  <div id="prompt">Clique sur un des cadeaux pour commencer</div>
+
+  <div class="gift-container">
+    <!-- Cadeau 1 : Vidéo seule -->
+    <div id="gift1" class="gift">
+      <img class="gift-image" src="images/gift1.jpg" alt="Vidéo cadeau"/>
+      <div class="gift-icon">🎬</div>
+    </div>
+
+    <!-- Cadeau 2 : Diaporama -->
+    <div id="gift2" class="gift">
+      <img class="gift-image" src="images/gift2.jpg" alt="Photos cadeau"/>
+      <div class="gift-icon">📷</div>
+    </div>
+  </div>
+
+  <div id="slideshow">
+    <!-- Tes images ici -->
+    <img class="image" src="images/1.jpg" alt="1">
+    <img class="image" src="images/2.jpg" alt="2">
+    <img class="image" src="images/3.jpg" alt="3">
+    <img class="image" src="images/4.jpg" alt="4">
+    <img class="image" src="images/5.jpg" alt="5">
+  </div>
+
+  <div id="message">🎂 Joyeux Anniversaire ! 🎉</div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <script>
+    const gift1 = document.getElementById('gift1');
+    const gift2 = document.getElementById('gift2');
+    const soloVideo = document.getElementById('solo-video');
+    const bgVideo = document.getElementById('bg-video');
+    const music = document.getElementById('bg-music');
+    const prompt = document.getElementById('prompt');
+    const header = document.getElementById('header');
+    const slideshow = document.getElementById('slideshow');
+    const images = Array.from(document.querySelectorAll('.image'));
+    const message = document.getElementById('message');
+
+    // 🎁 Vidéo seule
+    gift1.addEventListener('click', () => {
+      prompt.style.display = 'none';
+      header.style.display = 'none';
+      gift1.style.display = 'none';
+      gift2.style.display = 'none';
+      soloVideo.style.display = 'block';
+      soloVideo.play();
+    });
+
+    // 🎁 Diaporama
+    function showImage(index) {
+      images.forEach(img => img.classList.remove('active'));
+      images[index].classList.add('active');
+    }
+
+    function startSlideshow() {
+      bgVideo.style.visibility = 'visible';
+      bgVideo.style.opacity = '1';
+      bgVideo.currentTime = 0;
+      bgVideo.play().catch(() => {});
+      music.play().catch(() => {});
+
+      prompt.style.display = 'none';
+      gift1.style.display = 'none';
+      gift2.style.display = 'none';
+      header.style.display = 'none';
+      slideshow.style.display = 'block';
+
+      let index = 0;
+      showImage(index);
+      let interval = setInterval(() => {
+        index++;
+        if (index < images.length) {
+          showImage(index);
+        } else {
+          clearInterval(interval);
+          slideshow.style.display = 'none';
+          message.style.display = 'block';
+        }
+      }, 3000);
+    }
+
+    gift2.addEventListener('click', () => {
+      gsap.to(gift2, {
+        scale: 1.2,
+        duration: 0.5,
+        ease: 'back.out(1.7)',
+        onComplete: startSlideshow
+      });
+    }, { once: true });
+  </script>
+</body>
+</html>
