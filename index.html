@@ -134,6 +134,26 @@
       line-height: 1.2;
       z-index: 2;
     }
+    #back-button {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      font-size: 1.2em;
+      background-color: #fff;
+      color: #d6336c;
+      border: 2px solid #d6336c;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 5;
+      transition: background-color 0.3s ease;
+    }
+    
+    #back-button:hover {
+      background-color: #ffe6ec;
+    }
+
   </style>
 </head>
 <body>
@@ -207,6 +227,7 @@
   </div>
 
   <div id="message">🎂 Joyeux Anniversaire ! 🎉</div>
+  <button id="back-button" style="display:none;">🔙 Revenir aux cadeaux</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
   <script>
@@ -220,6 +241,32 @@
     const slideshow = document.getElementById('slideshow');
     const images = Array.from(document.querySelectorAll('.image'));
     const message = document.getElementById('message');
+    const backButton = document.getElementById('back-button');
+
+    backButton.addEventListener('click', () => {
+      // Masquer tous les éléments actifs
+      soloVideo.pause();
+      soloVideo.currentTime = 0;
+      soloVideo.style.display = 'none';
+    
+      bgVideo.pause();
+      bgVideo.currentTime = 0;
+      bgVideo.style.opacity = '0';
+      bgVideo.style.visibility = 'hidden';
+    
+      music.pause();
+      music.currentTime = 0;
+    
+      slideshow.style.display = 'none';
+      message.style.display = 'none';
+      backButton.style.display = 'none';
+    
+      // Réafficher les cadeaux
+      gift1.style.display = 'block';
+      gift2.style.display = 'block';
+      header.style.display = 'block';
+      prompt.style.display = 'block';
+    });
 
     // 🎁 Vidéo seule
     gift1.addEventListener('click', () => {
@@ -229,8 +276,10 @@
       gift2.style.display = 'none';
       soloVideo.style.display = 'block';
       soloVideo.play();
+      backButton.style.display = 'block';
     });
 
+    
     // 🎁 Diaporama
     function showImage(index) {
       images.forEach(img => img.classList.remove('active'));
@@ -243,7 +292,7 @@
       bgVideo.currentTime = 0;
       bgVideo.play().catch(() => {});
       music.play().catch(() => {});
-
+      backButton.style.display = 'block';
       prompt.style.display = 'none';
       gift1.style.display = 'none';
       gift2.style.display = 'none';
